@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/marginpadding">
+<LinearLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/display_text"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:fontFamily="sans-serif"
+            android:gravity="center"/>
+       </LinearLayout>
+    <LinearLayout
+        android:id="@+id/imagecontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/carvepadding">
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/display_image"
+            />
+
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/carvepadding">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="@dimen/marginpadding">
+        <ImageView
+            android:layout_width="@dimen/image_dimen"
+            android:layout_height="@dimen/image_dimen"
+            android:id="@+id/experience_icon"/>
+        <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:fontFamily="sans-serif-condensed"
+        android:id="@+id/experience"
+            android:layout_marginLeft="@dimen/marginpadding"
+        android:text="Experience: "/></LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/marginpadding">
+            <ImageView
+                android:layout_width="@dimen/image_dimen"
+                android:layout_height="@dimen/image_dimen"
+                android:id="@+id/ctc_icon"/>
+            <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ctc"
+                android:layout_marginLeft="@dimen/marginpadding"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:fontFamily="sans-serif"
+            android:text="CTC: 5-6 lpa"/>
+            </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/marginpadding">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/job_desc"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:fontFamily="sans-serif"
+        android:typeface="sans"
+        /></LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="@dimen/button_margin"
+        android:gravity="bottom|center">
+    <ImageView
+        android:layout_width="@dimen/button_image_margin"
+        android:layout_height="@dimen/button_image_margin"
+        android:id="@+id/favorite_button"/>
+</LinearLayout>
+
+</LinearLayout>
+</ScrollView>

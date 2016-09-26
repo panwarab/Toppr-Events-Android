@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Coding Events</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_category">Category</string>
+    <string name="action_favorite">Favorite</string>
+    <string name="action_settings">Setting</string>
+    <string name="action_share">Share</string>
+    <string name="apiquote">%API quote</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_detail">Event Details</string>
+</resources>
