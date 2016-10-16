@@ -4,4 +4,10 @@
     <color name="black2">#343434</color>
     <color name="black1">#040404</color>
     <color name="funky_red">#EC644B</color>
+
+
+    <!-- Material Design Colours -->
+    <color name="colorPrimary">#F44336</color>
+    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorAccent">#FF5722</color>
 </resources>
