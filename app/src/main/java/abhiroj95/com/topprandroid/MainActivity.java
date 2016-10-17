@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,36 +34,31 @@ import abhiroj95.com.topprandroid.Interface.ClickCallback;
 import abhiroj95.com.topprandroid.Utility.Utility;
 
 
-public class MainActivity extends ActionBarActivity implements ClickCallback {
+public class MainActivity extends AppCompatActivity implements ClickCallback {
 
 
- RequestQueue requestQueue;
+    RequestQueue requestQueue;
     boolean bool;
- String toLaunch="category"; // By Default, launch category
+    String toLaunch = "category"; // By Default, launch category
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActionBar actionBar=getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#EC644B")));
-        if(savedInstanceState!=null)
-        {
-            toLaunch=savedInstanceState.getString(Const_Data_Sets.OPT);
+        if (savedInstanceState != null) {
+            toLaunch = savedInstanceState.getString(Const_Data_Sets.OPT);
         }
         setContentView(R.layout.activity_main);
-        if(Utility.isNetworkAvailable(getBaseContext()))
-        {
-        makeRequest();
-            bool=true;
-        }
-        else
-        {
-            bool=false;
+        if (Utility.isNetworkAvailable(getBaseContext())) {
+            makeRequest();
+            bool = true;
+        } else {
+            bool = false;
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Snap!!").setMessage("The content on the screen may not be updated or blank due to connectivity issues").setNeutralButton("Ok",null);
-            AlertDialog alertDialog=alertDialogBuilder.create();
-            alertDialog.show();        }
+            alertDialogBuilder.setTitle("Snap!!").setMessage("The content on the screen may not be updated or blank due to connectivity issues").setNeutralButton("Ok", null);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
 
 
     }
@@ -74,66 +66,62 @@ public class MainActivity extends ActionBarActivity implements ClickCallback {
     //bool used to stop the checking of network connection twice
     @Override
     protected void onResume() {
-        if(bool)
-        {
-        if(Utility.isNetworkAvailable(getBaseContext()))
-        {
-            makeRequest();
+        if (bool) {
+            if (Utility.isNetworkAvailable(getBaseContext())) {
+                makeRequest();
+            } else {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("Snap!!").setMessage("The content on the screen may not be updated or blank due to connectivity issues").setNeutralButton("Ok", null);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
         }
-        else
-        {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Snap!!").setMessage("The content on the screen may not be updated or blank due to connectivity issues").setNeutralButton("Ok",null);
-            AlertDialog alertDialog=alertDialogBuilder.create();
-            alertDialog.show();        }}
         super.onResume();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(Const_Data_Sets.OPT,toLaunch);
+        outState.putSerializable(Const_Data_Sets.OPT, toLaunch);
         super.onSaveInstanceState(outState);
     }
 
     //Method uses Volley API to make Asynchronous API calls.
 
-    public void makeRequest(){
-        requestQueue= Volley.newRequestQueue(getBaseContext());
-        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, Const_Data_Sets.URL,null,new Response.Listener<JSONObject>() {
+    public void makeRequest() {
+        requestQueue = Volley.newRequestQueue(getBaseContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Const_Data_Sets.URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                try{
+                try {
 
-                    JSONArray ja=jsonObject.getJSONArray("websites");
+                    JSONArray ja = jsonObject.getJSONArray("websites");
 
-                    Data.dataSet=new ArrayList<>();
-                    Data.quota_max=Integer.parseInt(jsonObject.getString("quote_max"));
-                    Data.quota_available=Integer.parseInt(jsonObject.getString("quote_available"));
-                    for(int i=0;i<ja.length();i++)
-                    {
-                        Data data=new Data();
-                        JSONObject pos_element=ja.getJSONObject(i);
-                        data.id=pos_element.getString("id");
-                        data.name=pos_element.getString("name");
-                        data.category=pos_element.getString("category");
-                        data.description=pos_element.getString("description");
-                        data.experience=pos_element.getString("experience");
-                        data.imagepath=pos_element.getString("image");
+                    Data.dataSet = new ArrayList<>();
+                    Data.quota_max = Integer.parseInt(jsonObject.getString("quote_max"));
+                    Data.quota_available = Integer.parseInt(jsonObject.getString("quote_available"));
+                    for (int i = 0; i < ja.length(); i++) {
+                        Data data = new Data();
+                        JSONObject pos_element = ja.getJSONObject(i);
+                        data.id = pos_element.getString("id");
+                        data.name = pos_element.getString("name");
+                        data.category = pos_element.getString("category");
+                        data.description = pos_element.getString("description");
+                        data.experience = pos_element.getString("experience");
+                        data.imagepath = pos_element.getString("image");
                         data.dataSet.add(data);
                     }
-                     getFragmentManager().beginTransaction().replace(R.id.List_Holder,new EventListFrag()).commitAllowingStateLoss();
+                    getFragmentManager().beginTransaction().replace(R.id.List_Holder, new EventListFrag()).commitAllowingStateLoss();
 
 
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     Log.e(Const_Data_Sets.TAG, e.toString());
                     e.printStackTrace();
                 }
             }
-        },new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e(Const_Data_Sets.TAG,volleyError.toString());
+                Log.e(Const_Data_Sets.TAG, volleyError.toString());
                 volleyError.printStackTrace();
             }
         });
@@ -163,7 +151,7 @@ public class MainActivity extends ActionBarActivity implements ClickCallback {
             if (cursor.getCount() == 0)
                 Toast.makeText(this, "No favorite Events Yet", Toast.LENGTH_SHORT).show();
             else {
-                toLaunch="favorite";
+                toLaunch = "favorite";
                 launchFavoritefragment();
             }
             db.close();
@@ -172,16 +160,14 @@ public class MainActivity extends ActionBarActivity implements ClickCallback {
             return true;
         }
 
-        if(id==R.id.action_category)
-        {
-            toLaunch="category";
+        if (id == R.id.action_category) {
+            toLaunch = "category";
             makeRequest();
-        return true;
+            return true;
         }
 
-        if(id==R.id.action_refresh)
-        {
-            toLaunch="category";  //It is depreceated though, but I am using in just in case.
+        if (id == R.id.action_refresh) {
+            toLaunch = "category";  //It is depreceated though, but I am using in just in case.
             makeRequest();
             return true;
         }
@@ -191,27 +177,26 @@ public class MainActivity extends ActionBarActivity implements ClickCallback {
 
     @Override
     public void itemClicked(int i) {
-        Const_Data_Sets.position=i;
-        Intent intent=new Intent(this,DetailActivity.class);
-        intent.putExtra("FRAGMENT","Category");
+        Const_Data_Sets.position = i;
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("FRAGMENT", "Category");
         startActivity(intent);
     }
 
     @Override
     public void itemfavorite(int eventID) {
-       Data.dbposition=eventID;
-        Intent i=new Intent(this,DetailActivity.class);
-        i.putExtra("FRAGMENT","favorites");
+        Data.dbposition = eventID;
+        Intent i = new Intent(this, DetailActivity.class);
+        i.putExtra("FRAGMENT", "favorites");
         startActivity(i);
     }
 
 
-    void launchFavoritefragment(){
-        FavEventFragment ff=new FavEventFragment();
-        try{
+    void launchFavoritefragment() {
+        FavEventFragment ff = new FavEventFragment();
+        try {
             getFragmentManager().beginTransaction().replace(R.id.List_Holder, ff).commitAllowingStateLoss();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
