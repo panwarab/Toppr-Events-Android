@@ -4,4 +4,14 @@
     <color name="black2">#343434</color>
     <color name="black1">#040404</color>
     <color name="funky_red">#EC644B</color>
+
+    <color name="primary">#ff9800</color>
+    <color name="primary_dark">#f57c00</color>
+    <color name="primary_light">#FFE0B2</color>
+    <color name="accent">#FFC107</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#212121</color>
+    <color name="divider">#BDBDBD</color>
+
 </resources>
